@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدرسة عبدالله — تعلم العربية</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c9a84c; --gold-light:#e8c97a;
+  --dark:#0a0a0a; --dark2:#131313; --dark3:#1a1a1a; --dark4:#222;
+  --text:#f0ead6; --muted:#7a7060;
+  --green:#4a7c59; --green-light:#6aab7a;
+  --blue-light:#7aaed8; --purple-light:#b09ad8; --orange-light:#e8a87a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--text);font-family:'Noto Sans',sans-serif;min-height:100vh;}
+
+/* BG pattern */
+body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 50px,rgba(201,168,76,0.015) 50px,rgba(201,168,76,0.015) 51px),repeating-linear-gradient(-45deg,transparent,transparent 50px,rgba(201,168,76,0.015) 50px,rgba(201,168,76,0.015) 51px);pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,168,76,0.15);padding:0 20px;}
+.nav-inner{max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;direction:ltr;}
+.nav-logo{font-family:'Amiri',serif;font-size:20px;color:var(--gold);cursor:pointer;direction:rtl;}
+.nav-links{display:flex;gap:4px;}
+.nav-btn{padding:6px 12px;border-radius:8px;border:none;background:transparent;color:var(--muted);font-size:10px;letter-spacing:1px;cursor:pointer;font-family:'Noto Sans',sans-serif;transition:all 0.2s;}
+.nav-btn:hover,.nav-btn.active{background:rgba(201,168,76,0.1);color:var(--gold);}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:70px;}
+.page.active{display:block;}
+.wrap{max-width:800px;margin:0 auto;padding:30px 16px 60px;position:relative;z-index:1;}
+
+/* HOME */
+.home-hero{text-align:center;padding:50px 20px 40px;}
+.hero-bismillah{font-family:'Scheherazade New',serif;font-size:28px;color:var(--gold);margin-bottom:14px;line-height:1.8;}
+.hero-title{font-family:'Amiri',serif;font-size:48px;color:var(--text);margin-bottom:8px;}
+.hero-title span{color:var(--gold);}
+.hero-sub{font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:30px;direction:ltr;}
+.hero-line{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 30px;}
+.hero-quote{font-family:'Scheherazade New',serif;font-size:18px;color:var(--gold-light);margin-bottom:8px;line-height:1.9;}
+.hero-quote-ru{font-size:10px;color:var(--muted);direction:ltr;}
+
+/* Cards grid */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px;}
+.card-home{background:var(--dark2);border-radius:14px;padding:20px;cursor:pointer;transition:all 0.25s;border:1px solid rgba(201,168,76,0.1);position:relative;overflow:hidden;direction:ltr;}
+.card-home::before{content:'';position:absolute;top:0;right:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),transparent);}
+.card-home:hover{transform:translateY(-2px);border-color:rgba(201,168,76,0.3);background:var(--dark3);}
+.card-icon{font-size:28px;margin-bottom:10px;display:block;}
+.card-num{font-size:8px;letter-spacing:2px;color:var(--gold);margin-bottom:4px;}
+.card-title-ar{font-family:'Amiri',serif;font-size:22px;color:var(--gold);direction:rtl;margin-bottom:3px;}
+.card-title-ru{font-size:10px;color:var(--muted);}
+.card-desc{font-size:9px;color:var(--muted);margin-top:8px;line-height:1.6;}
+
+/* LESSON SECTIONS */
+.topic{border-radius:12px;padding:14px 18px;margin:24px 0 12px;direction:ltr;}
+.t1{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);}
+.t2{background:rgba(122,174,216,0.06);border:1px solid rgba(122,174,216,0.2);}
+.t3{background:rgba(176,154,216,0.06);border:1px solid rgba(176,154,216,0.2);}
+.t4{background:rgba(232,168,122,0.06);border:1px solid rgba(232,168,122,0.2);}
+.tnum{font-size:8px;letter-spacing:3px;margin-bottom:3px;}
+.t1 .tnum{color:var(--gold);}.t2 .tnum{color:var(--blue-light);}.t3 .tnum{color:var(--purple-light);}.t4 .tnum{color:var(--orange-light);}
+.tar{font-family:'Amiri',serif;font-size:26px;direction:rtl;margin-bottom:2px;}
+.t1 .tar{color:var(--gold);}.t2 .tar{color:var(--blue-light);}.t3 .tar{color:var(--purple-light);}.t4 .tar{color:var(--orange-light);}
+.tru{font-size:10px;color:var(--muted);letter-spacing:1px;}
+
+.stitle{font-size:9px;letter-spacing:2px;font-weight:600;margin:14px 0 8px;direction:ltr;display:flex;align-items:center;gap:8px;}
+.stitle::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(201,168,76,0.3),transparent);}
+.sg{color:var(--gold);}.sb{color:var(--blue-light);}.sp{color:var(--purple-light);}.so{color:var(--orange-light);}
+
+.rbox{background:var(--dark2);border-radius:10px;padding:14px 16px;margin-bottom:8px;direction:ltr;}
+.rlbl{font-size:8px;letter-spacing:2px;font-weight:600;margin-bottom:6px;}
+.lg{color:var(--gold);}.lb{color:var(--blue-light);}.lp{color:var(--purple-light);}.lo{color:var(--orange-light);}
+.rar{font-family:'Scheherazade New',serif;font-size:19px;color:var(--text);direction:rtl;text-align:right;line-height:2;margin-bottom:6px;}
+.rru{font-size:10px;color:var(--muted);line-height:1.6;}
+
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.tcard{background:var(--dark3);border-radius:10px;padding:12px 14px;direction:ltr;}
+.tname{font-family:'Amiri',serif;font-size:16px;direction:rtl;margin-bottom:4px;}
+.tdesc{font-size:9px;color:var(--muted);margin-bottom:6px;}
+.tex{font-family:'Scheherazade New',serif;font-size:17px;direction:rtl;color:var(--text);line-height:1.8;}
+.texru{font-size:9px;color:var(--muted);margin-top:4px;direction:ltr;}
+
+.qblock{background:var(--dark3);border-radius:10px;padding:14px 16px;margin-bottom:8px;border-right:3px solid var(--gold);}
+.qlbl{font-size:8px;letter-spacing:1px;color:var(--gold);margin-bottom:6px;direction:ltr;}
+.qar{font-family:'Scheherazade New',serif;font-size:20px;color:var(--gold-light);direction:rtl;text-align:right;line-height:1.9;margin-bottom:6px;}
+.qhl{color:#ff9f43;font-weight:bold;}
+.qru{font-size:9px;color:var(--muted);direction:ltr;line-height:1.6;}
+
+.pitem{background:var(--dark3);border-radius:10px;padding:12px 16px;margin-bottom:8px;direction:ltr;border:1px solid transparent;transition:border-color 0.2s;}
+.pitem:hover{border-color:rgba(201,168,76,0.2);}
+.prow{display:flex;align-items:center;justify-content:space-between;}
+.par{font-family:'Scheherazade New',serif;font-size:19px;color:var(--text);direction:rtl;flex:1;text-align:right;line-height:1.8;}
+.pnum{font-family:'Amiri',serif;font-size:20px;color:var(--muted);opacity:0.3;margin-left:10px;flex-shrink:0;}
+.abtn{padding:5px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);background:transparent;color:var(--gold);font-size:9px;letter-spacing:1px;cursor:pointer;flex-shrink:0;margin-right:8px;font-family:'Noto Sans',sans-serif;transition:all 0.2s;}
+.abtn:hover{background:rgba(201,168,76,0.1);}
+.abox{display:none;background:rgba(201,168,76,0.05);border-radius:8px;padding:10px 14px;margin-top:8px;border:1px solid rgba(201,168,76,0.12);}
+.abox.show{display:block;}
+.aar{font-family:'Scheherazade New',serif;font-size:16px;color:var(--gold-light);direction:rtl;text-align:right;margin-bottom:4px;}
+.aru{font-size:10px;color:var(--green-light);line-height:1.7;direction:ltr;}
+
+.tip{background:rgba(74,124,89,0.1);border:1px solid rgba(74,124,89,0.25);border-radius:8px;padding:10px 14px;margin:8px 0;font-size:9px;color:var(--green-light);direction:ltr;line-height:1.7;}
+
+.gtbl{width:100%;border-collapse:collapse;margin:8px 0;direction:ltr;}
+.gtbl th{background:rgba(201,168,76,0.08);color:var(--gold);font-size:8px;letter-spacing:1px;padding:8px 10px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.15);}
+.gtbl td{padding:8px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.04);font-size:10px;color:var(--text);}
+.gtbl .ard{font-family:'Scheherazade New',serif;font-size:18px;color:var(--gold-light);direction:rtl;}
+.gtbl tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+
+/* ADHKAR */
+.etime{border-radius:12px;padding:16px;text-align:center;margin-bottom:16px;}
+.em{background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(201,168,76,0.02));border:1px solid rgba(201,168,76,0.2);}
+.ee{background:linear-gradient(135deg,rgba(106,143,201,0.08),rgba(106,143,201,0.02));border:1px solid rgba(106,143,201,0.2);}
+.eico{font-size:30px;display:block;margin-bottom:6px;}
+.etitar{font-family:'Amiri',serif;font-size:26px;margin-bottom:3px;}
+.em .etitar{color:var(--gold);}.ee .etitar{color:#8aaee8;}
+.etitru{font-size:9px;color:var(--muted);letter-spacing:3px;direction:ltr;}
+
+.dcard{background:var(--dark2);border-radius:12px;padding:16px 16px 12px;margin-bottom:10px;position:relative;overflow:hidden;transition:opacity 0.3s;}
+.dm{border:1px solid rgba(201,168,76,0.1);border-right:3px solid var(--gold);}
+.de{border:1px solid rgba(106,143,201,0.1);border-right:3px solid #6a8fc9;}
+.dcard.done{opacity:0.35;}
+.dnum{position:absolute;top:10px;left:12px;font-family:'Amiri',serif;font-size:34px;opacity:0.05;direction:ltr;line-height:1;color:var(--gold);}
+.de .dnum{color:#6a8fc9;}
+.dtext{font-family:'Scheherazade New',serif;font-size:19px;color:var(--text);direction:rtl;text-align:right;line-height:2.1;margin-bottom:12px;}
+.dfooter{display:flex;align-items:center;justify-content:flex-end;direction:ltr;gap:8px;}
+.rbadge{padding:3px 10px;border-radius:20px;font-size:9px;font-weight:600;letter-spacing:1px;}
+.dm .rbadge{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.2);}
+.de .rbadge{background:rgba(106,143,201,0.1);color:#8aaee8;border:1px solid rgba(106,143,201,0.2);}
+.carea{display:flex;align-items:center;gap:6px;direction:ltr;}
+.cbtn{width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-weight:bold;}
+.dm .cbtn{background:rgba(201,168,76,0.15);color:var(--gold);}
+.de .cbtn{background:rgba(106,143,201,0.15);color:#8aaee8;}
+.cbtn:active{transform:scale(0.88);}
+.cnum{font-size:11px;font-weight:600;min-width:40px;text-align:center;color:var(--gold);direction:ltr;}
+.de .cnum{color:#8aaee8;}
+.dcheck{width:26px;height:26px;border-radius:50%;align-items:center;justify-content:center;font-size:13px;display:none;}
+.dm .dcheck{background:rgba(201,168,76,0.2);color:var(--gold);}
+.de .dcheck{background:rgba(106,143,201,0.2);color:#8aaee8;}
+.dcard.done .dcheck{display:flex;}
+.dcard.done .carea{display:none;}
+
+.rbtn{display:block;margin:16px auto 0;padding:9px 24px;background:transparent;border:1px solid rgba(201,168,76,0.15);border-radius:20px;color:var(--muted);font-size:9px;letter-spacing:2px;cursor:pointer;font-family:'Noto Sans',sans-serif;transition:all 0.2s;direction:ltr;}
+.rbtn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* HARAKAT */
+.hgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0;}
+.hcard{background:var(--dark3);border-radius:10px;padding:14px 10px;text-align:center;direction:ltr;}
+.hsym{font-family:'Scheherazade New',serif;font-size:28px;display:block;margin-bottom:6px;}
+.hname{font-size:9px;letter-spacing:1px;margin-bottom:4px;font-weight:600;}
+.hdesc{font-size:9px;color:var(--muted);line-height:1.5;}
+
+/* IRAB */
+.iblock{background:var(--dark2);border-radius:12px;padding:16px;margin-bottom:12px;direction:ltr;}
+.iayah{font-family:'Scheherazade New',serif;font-size:22px;color:var(--gold-light);direction:rtl;text-align:center;line-height:2;margin-bottom:14px;padding:12px;background:rgba(201,168,76,0.05);border-radius:8px;border:1px solid rgba(201,168,76,0.1);}
+
+/* FOOTER */
+.pfooter{text-align:center;padding:28px 0 10px;border-top:1px solid rgba(201,168,76,0.1);margin-top:20px;}
+.pfar{font-family:'Scheherazade New',serif;font-size:20px;color:var(--gold);direction:rtl;margin-bottom:6px;}
+.pfru{font-size:9px;color:var(--muted);direction:ltr;letter-spacing:1px;}
+
+@media(max-width:500px){.cards,.tgrid,.hgrid{grid-template-columns:1fr;}.nav-btn{font-size:8px;padding:5px 8px;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="show('home')">مدرسة عبدالله</div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="show('home')">🏠 ГЛАВНАЯ</button>
+      <button class="nav-btn" onclick="show('l1')">УРОК 1</button>
+      <button class="nav-btn" onclick="show('l2')">УРОК 2</button>
+      <button class="nav-btn" onclick="show('l3')">УРОК 3</button>
+      <button class="nav-btn" onclick="show('adhkar')">📿 АЗКАР</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== ГЛАВНАЯ ===== -->
+<div class="page active" id="home">
+<div class="wrap">
+  <div class="home-hero">
+    <div class="hero-bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="hero-title">مدرسة <span>عبدالله</span></div>
+    <div class="hero-sub">ШКОЛА АРАБСКОГО ЯЗЫКА</div>
+    <div class="hero-line"></div>
+    <div class="hero-quote">طَلَبُ العِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</div>
+    <div class="hero-quote-ru">«Требование знания — обязанность для каждого мусульманина» ﷺ</div>
+  </div>
+
+  <div class="cards">
+    <div class="card-home" onclick="show('l1')">
+      <span class="card-icon">📖</span>
+      <div class="card-num">УРОК ПЕРВЫЙ</div>
+      <div class="card-title-ar">الدرس الأول</div>
+      <div class="card-title-ru">Аяты, хадисы, словарный запас, грамматика</div>
+      <div class="card-desc">جملة اسمية · إضافة · نعت · أنواع الخبر</div>
+    </div>
+    <div class="card-home" onclick="show('l2')">
+      <span class="card-icon">🗣️</span>
+      <div class="card-num">УРОК ВТОРОЙ</div>
+      <div class="card-title-ar">الدرس الثاني</div>
+      <div class="card-title-ru">Разговорная практика, времена глагола</div>
+      <div class="card-desc">الأفعال · لأنّ · أن + فعل</div>
+    </div>
+    <div class="card-home" onclick="show('l3')">
+      <span class="card-icon">✏️</span>
+      <div class="card-num">УРОК ТРЕТИЙ</div>
+      <div class="card-title-ar">الدرس الثالث</div>
+      <div class="card-title-ru">أنواع الخبر · النعت · الإضافة · الإعراب</div>
+      <div class="card-desc">разбор сурат аль-Фатиха · упражнения</div>
+    </div>
+    <div class="card-home" onclick="show('adhkar')">
+      <span class="card-icon">📿</span>
+      <div class="card-num">АЗКАРЫ</div>
+      <div class="card-title-ar">الأذكار</div>
+      <div class="card-title-ru">Утренние и вечерние азкары</div>
+      <div class="card-desc">со счётчиком и отметками ✓</div>
+    </div>
+  </div>
+
+  <div class="pfooter">
+    <div class="pfar">بِإِذْنِ اللهِ سَنَنْجَحُ مَعاً 🤲</div>
+    <div class="pfru">С ПОЗВОЛЕНИЯ АЛЛАХА МЫ ДОБЬЁМСЯ УСПЕХА ВМЕСТЕ</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== УРОК 1 ===== -->
+<div class="page" id="l1">
+<div class="wrap">
+
+  <div class="topic t1" style="margin-top:0">
+    <div class="tnum">УРОК ПЕРВЫЙ</div>
+    <div class="tar">الدرس الأول</div>
+    <div class="tru">Аяты, хадисы, словарный запас, грамматика</div>
+  </div>
+
+  <div class="stitle sg">📖 АЯТЫ И ХАДИСЫ</div>
+  <div class="qblock"><div class="qlbl">سورة البقرة</div><div class="qar">إِنَّ اللَّهَ مَعَ الصَّابِرِينَ</div><div class="qru">«Воистину, Аллах — с терпеливыми»</div></div>
+  <div class="qblock"><div class="qlbl">سورة البقرة</div><div class="qar">وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ</div><div class="qru">«И Аллах — Всезнающий о каждой вещи»</div></div>
+  <div class="qblock"><div class="qlbl">حديث — أبو هريرة رضي الله عنه</div><div class="qar">مَنْ كَانَ يُؤْمِنُ بِاللهِ وَاليَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ</div><div class="qru">«Кто уверовал в Аллаха и в Последний день — пусть говорит благое или молчит»</div></div>
+  <div class="qblock"><div class="qlbl">حديث النبي ﷺ</div><div class="qar">طَلَبُ العِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</div><div class="qru">«Требование знания — обязанность для каждого мусульманина»</div></div>
+
+  <div class="stitle sg">📚 СЛОВАРНЫЙ ЗАПАС</div>
+  <table class="gtbl">
+    <thead><tr><th>Арабский</th><th>Чтение</th><th>Перевод</th></tr></thead>
+    <tbody>
+      <tr><td class="ard">عَاقِل</td><td style="font-size:9px;color:var(--muted);font-style:italic">'акыль</td><td>разумный</td></tr>
+      <tr><td class="ard">صَادِق</td><td style="font-size:9px;color:var(--muted);font-style:italic">садык</td><td>правдивый</td></tr>
+      <tr><td class="ard">كَرِيم</td><td style="font-size:9px;color:var(--muted);font-style:italic">карим</td><td>щедрый</td></tr>
+      <tr><td class="ard">شُجَاع</td><td style="font-size:9px;color:var(--muted);font-style:italic">шуджа'</td><td>храбрый</td></tr>
+      <tr><td class="ard">مُتَوَاضِع</td><td style="font-size:9px;color:var(--muted);font-style:italic">мутаваади'</td><td>скромный</td></tr>
+      <tr><td class="ard">عِلْم</td><td style="font-size:9px;color:var(--muted);font-style:italic">'ильм</td><td>знание</td></tr>
+      <tr><td class="ard">عَالِم</td><td style="font-size:9px;color:var(--muted);font-style:italic">'алим</td><td>учёный</td></tr>
+      <tr><td class="ard">طَالِب</td><td style="font-size:9px;color:var(--muted);font-style:italic">талиб</td><td>студент</td></tr>
+      <tr><td class="ard">كِتَاب</td><td style="font-size:9px;color:var(--muted);font-style:italic">китаб</td><td>книга</td></tr>
+      <tr><td class="ard">فَهْم</td><td style="font-size:9px;color:var(--muted);font-style:italic">фахм</td><td>понимание</td></tr>
+    </tbody>
+  </table>
+
+  <div class="stitle sg">✏️ ГРАММАТИКА</div>
+  <div class="rbox">
+    <div class="rlbl lg">جملة اسمية — ИМЕННОЕ ПРЕДЛОЖЕНИЕ</div>
+    <div class="rar">العِلْمُ نُورٌ وَالجَهْلُ ظَلَامٌ</div>
+    <div class="rru">мبتدأ + خبر — без глагола «есть» | «Знание — свет, невежество — тьма»</div>
+  </div>
+  <div class="rbox">
+    <div class="rlbl lg">إضافة — КОНСТРУКЦИЯ ПРИСОЕДИНЕНИЯ</div>
+    <div class="rar">بَابُ البَيْتِ — كِتَابُ اللهِ — رَبُّ العَالَمِينَ</div>
+    <div class="rru">مضاف + مضاف إليه | ال только на последнем слове цепочки!</div>
+  </div>
+  <div class="rbox">
+    <div class="rlbl lg">كورن أ-م-ن — КОРЕНЬ ВЕРЫ</div>
+    <div class="rar">آمَنَ — يُؤْمِنُ — مُؤْمِن — إِيمَان</div>
+    <div class="rru">уверовал — верует — верующий — вера | Один корень — много слов!</div>
+  </div>
+
+  <div class="pfooter">
+    <div class="pfar">الحمد لله رب العالمين</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== УРОК 2 ===== -->
+<div class="page" id="l2">
+<div class="wrap">
+
+  <div class="topic t2" style="margin-top:0">
+    <div class="tnum">УРОК ВТОРОЙ</div>
+    <div class="tar">الدرس الثاني</div>
+    <div class="tru">Разговорная практика и времена глагола</div>
+  </div>
+
+  <div class="stitle sb">🗣️ РАЗГОВОР — ТЫ СКАЗАЛ ПРАВИЛЬНО</div>
+  <div class="rbox">
+    <div class="rlbl lb">من يومك ✅</div>
+    <div class="rar">لَمْ أَنَمْ قَبْلَ الفَجْرِ، ذَهَبْتُ إِلَى المَسْجِدِ مَعَ ابْنِي وَصَلَّيْتُ صَلَاةَ الفَجْرِ</div>
+    <div class="rru">«Я не спал до Фаджра, пошёл в мечеть с сыном и совершил молитву Фаджр»</div>
+  </div>
+  <div class="rbox">
+    <div class="rlbl lb">أحسنت ✅</div>
+    <div class="rar">أَنَا لَا أُرِيدُ أَنْ أَنَامَ لِأَنَّنِي أُحِبُّ أَنْ أَدْرُسَ اللُّغَةَ العَرَبِيَّةَ</div>
+    <div class="rru">«Я не хочу спать потому что люблю учить арабский» — 4 уровня в одном предложении!</div>
+  </div>
+
+  <div class="stitle sb">⏰ ВРЕМЕНА ГЛАГОЛА</div>
+  <table class="gtbl">
+    <thead><tr><th>الزمن</th><th>الفعل</th><th>المعنى</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--muted);font-size:9px">Прошедшее</td><td class="ard">تَزَوَّجْتُ</td><td>женился</td></tr>
+      <tr><td style="color:var(--muted);font-size:9px">Настоящее</td><td class="ard">أَتَزَوَّجُ</td><td>женюсь</td></tr>
+      <tr><td style="color:var(--gold);font-size:9px">Будущее</td><td class="ard" style="color:var(--gold)">سَأَتَزَوَّجُ</td><td>женюсь скоро</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 سَـ в начале глагола = будущее время!</div>
+
+  <div class="stitle sb">📌 КОНСТРУКЦИИ</div>
+  <div class="rbox">
+    <div class="rlbl lb">أَنْ + فعل — ИНФИНИТИВ</div>
+    <div class="rar">أُرِيدُ أَنْ أَتَزَوَّجَ — أُحِبُّ أَنْ أَدْرُسَ</div>
+    <div class="rru">«хочу жениться» — «люблю учить»</div>
+  </div>
+  <div class="rbox">
+    <div class="rlbl lb">لِأَنَّ — ПОТОМУ ЧТО</div>
+    <div class="rar">لِأَنَّنِي أُحِبُّ اللُّغَةَ العَرَبِيَّةَ</div>
+    <div class="rru">лِأَنَّ + نِي (я) = لِأَنَّنِي</div>
+  </div>
+
+  <div class="stitle sb">📖 АЯТ УРОКА</div>
+  <div class="qblock" style="border-right-color:var(--blue-light)">
+    <div class="qlbl" style="color:var(--blue-light)">سورة غافر — 60</div>
+    <div class="qar">وَقَالَ رَبُّكُمُ ادْعُونِي أَسْتَجِبْ لَكُمْ</div>
+    <div class="qru">«И сказал ваш Господь — взывайте ко Мне, Я отвечу вам»</div>
+  </div>
+  <div class="qblock" style="border-right-color:var(--blue-light)">
+    <div class="qlbl" style="color:var(--blue-light)">حديث ﷺ</div>
+    <div class="qar">أَحَبُّ الأَعْمَالِ إِلَى اللهِ أَدْوَمُهَا وَإِنْ قَلَّ</div>
+    <div class="qru">«Самое любимое дело для Аллаха — то которое постоянно, даже если его мало»</div>
+  </div>
+
+  <div class="stitle sb">📚 СЛОВА УРОКА</div>
+  <table class="gtbl">
+    <thead><tr><th>Арабский</th><th>Перевод</th></tr></thead>
+    <tbody>
+      <tr><td class="ard">زَوْجَة</td><td>жена</td></tr>
+      <tr><td class="ard">اِبْن</td><td>сын</td></tr>
+      <tr><td class="ard">مَسْجِد</td><td>мечеть</td></tr>
+      <tr><td class="ard">صَلَاة</td><td>намаз</td></tr>
+      <tr><td class="ard">عَادِل</td><td>справедливый</td></tr>
+      <tr><td class="ard">كَسْلَان</td><td>ленивый</td></tr>
+      <tr><td class="ard">مُجْتَهِد</td><td>усердный</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pfooter">
+    <div class="pfar">بَارَكَ اللهُ فِيكَ وَفِي ابْنِكَ 🤲</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== УРОК 3 ===== -->
+<div class="page" id="l3">
+<div class="wrap">
+
+  <div class="topic t1" style="margin-top:0">
+    <div class="tnum">ТЕМА ПЕРВАЯ</div>
+    <div class="tar">أنواع الخبر</div>
+    <div class="tru">Виды сказуемого</div>
+  </div>
+
+  <div class="tgrid">
+    <div class="tcard" style="border-top:2px solid var(--gold)"><div class="tname" style="color:var(--gold)">خبر مفرد</div><div class="tdesc">Одно слово</div><div class="tex">اللهُ كَرِيمٌ</div><div class="texru">«Аллах щедрый»</div></div>
+    <div class="tcard" style="border-top:2px solid var(--blue-light)"><div class="tname" style="color:var(--blue-light)">جملة فعلية</div><div class="tdesc">Глагольное предложение</div><div class="tex">الطالبُ يَدْرُسُ</div><div class="texru">«Студент учится»</div></div>
+    <div class="tcard" style="border-top:2px solid var(--purple-light)"><div class="tname" style="color:var(--purple-light)">جملة اسمية</div><div class="tdesc">Именное предложение</div><div class="tex">المؤمنُ قلبُهُ طاهرٌ</div><div class="texru">«У верующего сердце чистое»</div></div>
+    <div class="tcard" style="border-top:2px solid var(--green-light)"><div class="tname" style="color:var(--green-light)">شبه الجملة</div><div class="tdesc">Предлог + существительное</div><div class="tex">الكتابُ عَلَى الطَّاوِلَةِ</div><div class="texru">«Книга на столе»</div></div>
+  </div>
+
+  <div class="stitle sg">✏️ ПРАКТИКА</div>
+  <div class="tip">💡 Нажми «ОТВЕТ» чтобы проверить!</div>
+  <div class="pitem"><div class="prow"><span class="pnum">١</span><span class="par">اللهُ غَفُورٌ رَحِيمٌ</span><button class="abtn" onclick="tog('a1')">ОТВЕТ</button></div><div class="abox" id="a1"><div class="aar">خبر مفرد متعدد</div><div class="aru">«Аллах — Прощающий, Милосердный»</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٢</span><span class="par">النَّبِيُّ يَدْعُو إِلَى اللهِ</span><button class="abtn" onclick="tog('a2')">ОТВЕТ</button></div><div class="abox" id="a2"><div class="aar">خبر جملة فعلية</div><div class="aru">«Пророк призывает к Аллаху»</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٣</span><span class="par">الصَّلَاةُ عِمَادُ الدِّينِ</span><button class="abtn" onclick="tog('a3')">ОТВЕТ</button></div><div class="abox" id="a3"><div class="aar">خبر مفرد (إضافة)</div><div class="aru">«Намаз — столп религии»</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٤</span><span class="par">الصَّبْرُ نِصْفُ الإِيمَانِ</span><button class="abtn" onclick="tog('a4')">ОТВЕТ</button></div><div class="abox" id="a4"><div class="aar">خبر مفرد (إضافة)</div><div class="aru">«Терпение — половина веры» ﷺ</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٥</span><span class="par">الكِتَابُ فِي البَيْتِ</span><button class="abtn" onclick="tog('a5')">ОТВЕТ</button></div><div class="abox" id="a5"><div class="aar">خبر شبه الجملة</div><div class="aru">«Книга в доме»</div></div></div>
+
+  <div class="topic t2">
+    <div class="tnum">ТЕМА ВТОРАЯ</div>
+    <div class="tar">النعت</div>
+    <div class="tru">Определение — Какой? أَيُّ؟</div>
+  </div>
+
+  <div class="rbox">
+    <div class="rlbl lb">4 УСЛОВИЯ СОГЛАСОВАНИЯ</div>
+    <div class="rru">١ — Род | ٢ — Число | ٣ — Определённость (ال) | ٤ — Падеж (харакат)</div>
+  </div>
+  <div class="stitle sb">✏️ ПРАКТИКА</div>
+  <div class="pitem"><div class="prow"><span class="pnum">١</span><span class="par">جَاءَ الطَّالِبُ المُجْتَهِدُ</span><button class="abtn" onclick="tog('b1')">ОТВЕТ</button></div><div class="abox" id="b1"><div class="aar">النعت = المُجْتَهِدُ</div><div class="aru">«Пришёл усердный студент»</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٢</span><span class="par">قَرَأْتُ القُرْآنَ الكَرِيمَ</span><button class="abtn" onclick="tog('b2')">ОТВЕТ</button></div><div class="abox" id="b2"><div class="aar">النعت = الكَرِيمَ</div><div class="aru">«Я читал благородный Коран»</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٣</span><span class="par">اللهُ رَبٌّ عَظِيمٌ</span><button class="abtn" onclick="tog('b3')">ОТВЕТ</button></div><div class="abox" id="b3"><div class="aar">الخبر = رَبٌّ | النعت = عَظِيمٌ</div><div class="aru">«Аллах — Господь великий»</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٤</span><span class="par">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</span><button class="abtn" onclick="tog('b4')">ОТВЕТ</button></div><div class="abox" id="b4"><div class="aar">النعت = الْمُسْتَقِيمَ</div><div class="aru">«Веди нас по пути прямому» — سورة الفاتحة</div></div></div>
+
+  <div class="topic t3">
+    <div class="tnum">ТЕМА ТРЕТЬЯ</div>
+    <div class="tar">الإضافة</div>
+    <div class="tru">Конструкция присоединения — Чей? Чего?</div>
+  </div>
+
+  <div class="rbox">
+    <div class="rlbl lp">3 ПРАВИЛА</div>
+    <div class="rru">١ — مضاف без ال и تنوين | ٢ — مضاف إليه с كسرة | ٣ — ال только на последнем в цепочке!</div>
+  </div>
+  <div class="stitle sp">✏️ ПРАКТИКА</div>
+  <div class="pitem"><div class="prow"><span class="pnum">١</span><span class="par">بَيْتُ اللهِ</span><button class="abtn" onclick="tog('c1')">ОТВЕТ</button></div><div class="abox" id="c1"><div class="aar">مضاف = بَيْتُ | مضاف إليه = اللهِ</div><div class="aru">«Дом Аллаха» — Кааба!</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٢</span><span class="par">رَبُّ العَالَمِينَ</span><button class="abtn" onclick="tog('c2')">ОТВЕТ</button></div><div class="abox" id="c2"><div class="aar">مضاف = رَبُّ | مضاف إليه = العَالَمِينَ</div><div class="aru">«Господь миров» — سورة الفاتحة</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٣</span><span class="par">سَيَّارَةُ مُهَنْدِسِ الشَّرِكَةِ</span><button class="abtn" onclick="tog('c3')">ОТВЕТ</button></div><div class="abox" id="c3"><div class="aar">سَيَّارَةُ ← مُهَنْدِسِ ← الشَّرِكَةِ</div><div class="aru">«Машина инженера компании» — цепочка из 3 слов!</div></div></div>
+  <div class="pitem"><div class="prow"><span class="pnum">٤</span><span class="par">مَفَاتِيحُ خَزَائِنِ رَحْمَةِ اللهِ</span><button class="abtn" onclick="tog('c4')">ОТВЕТ</button></div><div class="abox" id="c4"><div class="aar">مضاف ← مضاف إليه + مضاف ← مضاف إليه + مضاف ← مضاف إليه</div><div class="aru">«Ключи сокровищниц милости Аллаха» — цепочка из 4 слов!</div></div></div>
+
+  <div class="topic t4">
+    <div class="tnum">ТЕМА ЧЕТВЁРТАЯ</div>
+    <div class="tar">الإعراب</div>
+    <div class="tru">Грамматический разбор — разбор Фатихи</div>
+  </div>
+
+  <div class="hgrid">
+    <div class="hcard" style="border-top:2px solid var(--gold)"><span class="hsym" style="color:var(--gold)">ـُ</span><div class="hname" style="color:var(--gold)">ضمة — ГЛАВНОЕ</div><div class="hdesc">Подлежащее, сказуемое</div></div>
+    <div class="hcard" style="border-top:2px solid var(--blue-light)"><span class="hsym" style="color:var(--blue-light)">ـَ</span><div class="hname" style="color:var(--blue-light)">فتحة — ЗАВИСИМОЕ</div><div class="hdesc">Объект после глагола</div></div>
+    <div class="hcard" style="border-top:2px solid var(--purple-light)"><span class="hsym" style="color:var(--purple-light)">ـِ</span><div class="hname" style="color:var(--purple-light)">كسرة — ПОСЛЕ ПРЕДЛОГА</div><div class="hdesc">После предлога / مضاف إليه</div></div>
+  </div>
+
+  <div class="stitle so">📖 РАЗБОР СУРАТ АЛЬ-ФАТИХА</div>
+  <div class="iblock">
+    <div class="iayah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <table class="gtbl"><thead><tr><th>الكلمة</th><th>الحركة</th><th>السبب</th></tr></thead><tbody>
+      <tr><td class="ard">بِسْمِ</td><td style="color:var(--purple-light)">ـِ</td><td>بعد حرف الجر بِـ</td></tr>
+      <tr><td class="ard">اللهِ</td><td style="color:var(--purple-light)">ـِ</td><td>مضاف إليه</td></tr>
+      <tr><td class="ard">الرَّحْمَنِ</td><td style="color:var(--purple-light)">ـِ</td><td>نعت لله</td></tr>
+      <tr><td class="ard">الرَّحِيمِ</td><td style="color:var(--purple-light)">ـِ</td><td>نعت لله</td></tr>
+    </tbody></table>
+  </div>
+  <div class="iblock">
+    <div class="iayah">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</div>
+    <table class="gtbl"><thead><tr><th>الكلمة</th><th>الحركة</th><th>السبب</th></tr></thead><tbody>
+      <tr><td class="ard">اهْدِنَا</td><td style="color:var(--orange-light)">أمر</td><td>Глагол повеления</td></tr>
+      <tr><td class="ard">الصِّرَاطَ</td><td style="color:var(--blue-light)">ـَ</td><td>ЗАВИСИМОЕ — объект</td></tr>
+      <tr><td class="ard">الْمُسْتَقِيمَ</td><td style="color:var(--blue-light)">ـَ</td><td>نعت — следует за الصِّرَاطَ</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="pfooter">
+    <div class="pfar">بِإِذْنِ اللهِ سَنَنْجَحُ مَعاً 🤲</div>
+    <div class="pfru">С ПОЗВОЛЕНИЯ АЛЛАХА МЫ ДОБЬЁМСЯ УСПЕХА ВМЕСТЕ</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== АЗКАР ===== -->
+<div class="page" id="adhkar">
+<div class="wrap">
+
+  <div class="etime em">
+    <span class="eico">🌅</span>
+    <div class="etitar">أذكار الصباح</div>
+    <div class="etitru">УТРЕННИЕ АЗКАРЫ — 13 ЗИКРОВ</div>
+  </div>
+
+  <div class="dcard dm" id="m1"><div class="dnum">1</div><div class="dtext">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلهِ، وَالْحَمْدُ لِلهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m1',1)">✓</button><span class="cnum" id="m1-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m2"><div class="dnum">2</div><div class="dtext">اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m2',1)">✓</button><span class="cnum" id="m2-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m3"><div class="dnum">3</div><div class="dtext">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m3',1)">✓</button><span class="cnum" id="m3-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m4"><div class="dnum">4</div><div class="dtext">سُبْحَانَ اللهِ وَبِحَمْدِهِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m4',100)">+</button><span class="cnum" id="m4-c">0/100</span></div><div class="dcheck">✓</div><span class="rbadge">100 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m5"><div class="dnum">5</div><div class="dtext">لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m5',100)">+</button><span class="cnum" id="m5-c">0/100</span></div><div class="dcheck">✓</div><span class="rbadge">100 / 10 / 1</span></div></div>
+
+  <div class="dcard dm" id="m6"><div class="dnum">6</div><div class="dtext">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m6',1)">✓</button><span class="cnum" id="m6-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m7"><div class="dnum">7</div><div class="dtext">اللَّهُمَّ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، عَالِمَ الْغَيْبِ وَالشَّهَادَةِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَشَرِّ الشَّيْطَانِ وَشِرْكِهِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m7',1)">✓</button><span class="cnum" id="m7-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m8"><div class="dnum">8</div><div class="dtext">أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا، وَمَا كَانَ مِنَ الْمُشْرِكِينَ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m8',1)">✓</button><span class="cnum" id="m8-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m9"><div class="dnum">9</div><div class="dtext">أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m9',1)">✓</button><span class="cnum" id="m9-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m10"><div class="dnum">10</div><div class="dtext">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m10',1)">✓</button><span class="cnum" id="m10-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m11"><div class="dnum">11</div><div class="dtext">حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m11',7)">+</button><span class="cnum" id="m11-c">0/7</span></div><div class="dcheck">✓</div><span class="rbadge">7 РАЗ</span></div></div>
+
+  <div class="dcard dm" id="m12"><div class="dnum">12</div><div class="dtext">سُبْحَانَ اللهِ وَبِحَمْدِهِ عَدَدَ خَلْقِهِ وَرِضَا نَفْسِهِ وَزِنَةَ عَرْشِهِ وَمِدَادَ كَلِمَاتِهِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m12',3)">+</button><span class="cnum" id="m12-c">0/3</span></div><div class="dcheck">✓</div><span class="rbadge">3 РАЗА</span></div></div>
+
+  <div class="dcard dm" id="m13"><div class="dnum">13</div><div class="dtext">أَصْبَحْتُ أَثْنِي عَلَيْكَ حَمْدًا، وَأَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللهُ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('m13',3)">+</button><span class="cnum" id="m13-c">0/3</span></div><div class="dcheck">✓</div><span class="rbadge">3 РАЗА</span></div></div>
+
+  <button class="rbtn" onclick="rst('m',13)">↺ СБРОСИТЬ УТРО</button>
+
+  <div class="etime ee" style="margin-top:28px">
+    <span class="eico">🌙</span>
+    <div class="etitar">أذكار المساء</div>
+    <div class="etitru">ВЕЧЕРНИЕ АЗКАРЫ — 11 ЗИКРОВ</div>
+  </div>
+
+  <div class="dcard de" id="e1"><div class="dnum">1</div><div class="dtext">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلهِ، وَالْحَمْدُ لِلهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e1',1)">✓</button><span class="cnum" id="e1-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e2"><div class="dnum">2</div><div class="dtext">اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e2',1)">✓</button><span class="cnum" id="e2-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e3"><div class="dnum">3</div><div class="dtext">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e3',1)">✓</button><span class="cnum" id="e3-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e4"><div class="dnum">4</div><div class="dtext">سُبْحَانَ اللهِ وَبِحَمْدِهِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e4',100)">+</button><span class="cnum" id="e4-c">0/100</span></div><div class="dcheck">✓</div><span class="rbadge">100 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e5"><div class="dnum">5</div><div class="dtext">لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e5',100)">+</button><span class="cnum" id="e5-c">0/100</span></div><div class="dcheck">✓</div><span class="rbadge">100 / 10 / 1</span></div></div>
+
+  <div class="dcard de" id="e6"><div class="dnum">6</div><div class="dtext">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e6',1)">✓</button><span class="cnum" id="e6-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e7"><div class="dnum">7</div><div class="dtext">اللَّهُمَّ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ، عَالِمَ الْغَيْبِ وَالشَّهَادَةِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَشَرِّ الشَّيْطَانِ وَشِرْكِهِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e7',1)">✓</button><span class="cnum" id="e7-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e8"><div class="dnum">9</div><div class="dtext">أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e8',1)">✓</button><span class="cnum" id="e8-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e9"><div class="dnum">10</div><div class="dtext">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e9',1)">✓</button><span class="cnum" id="e9-c">1×</span></div><div class="dcheck">✓</div><span class="rbadge">1 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e10"><div class="dnum">11</div><div class="dtext">حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e10',7)">+</button><span class="cnum" id="e10-c">0/7</span></div><div class="dcheck">✓</div><span class="rbadge">7 РАЗ</span></div></div>
+
+  <div class="dcard de" id="e11"><div class="dnum">13</div><div class="dtext">أَمْسَيْتُ أَثْنِي عَلَيْكَ حَمْدًا، وَأَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللهُ</div><div class="dfooter"><div class="carea"><button class="cbtn" onclick="dk('e11',3)">+</button><span class="cnum" id="e11-c">0/3</span></div><div class="dcheck">✓</div><span class="rbadge">3 РАЗА</span></div></div>
+
+  <button class="rbtn" onclick="rst('e',11)">↺ СБРОСИТЬ ВЕЧЕР</button>
+
+  <div class="pfooter">
+    <div class="pfar">اللَّهُمَّ اجْعَلْنَا مِنَ الذَّاكِرِينَ 🤲</div>
+    <div class="pfru">О АЛЛАХ, СДЕЛАЙ НАС ИЗ ПОМИНАЮЩИХ ТЕБЯ</div>
+  </div>
+</div>
+</div>
+
+<script>
+// Navigation
+function show(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  const btns = document.querySelectorAll('.nav-btn');
+  const map = {home:0,l1:1,l2:2,l3:3,adhkar:4};
+  if(map[id]!==undefined) btns[map[id]].classList.add('active');
+}
+
+// Practice toggles
+function tog(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+
+// Adhkar counter
+const cnts = {};
+const mx = {m1:1,m2:1,m3:1,m4:100,m5:100,m6:1,m7:1,m8:1,m9:1,m10:1,m11:7,m12:3,m13:3,e1:1,e2:1,e3:1,e4:100,e5:100,e6:1,e7:1,e8:1,e9:1,e10:7,e11:3};
+
+function dk(id, max) {
+  if(document.getElementById(id).classList.contains('done')) return;
+  if(!cnts[id]) cnts[id]=0;
+  cnts[id]++;
+  const el = document.getElementById(id+'-c');
+  if(max===1){ document.getElementById(id).classList.add('done'); }
+  else { el.textContent=cnts[id]+'/'+max; if(cnts[id]>=max) document.getElementById(id).classList.add('done'); }
+}
+
+function rst(prefix, count) {
+  for(let i=1;i<=count;i++){
+    const id=prefix+i;
+    const card=document.getElementById(id);
+    if(!card) continue;
+    card.classList.remove('done');
+    cnts[id]=0;
+    const el=document.getElementById(id+'-c');
+    el.textContent=mx[id]===1?'1×':'0/'+mx[id];
+  }
+}
+</script>
+</body>
+</html>
